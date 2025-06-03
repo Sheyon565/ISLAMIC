@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="135dp"
+    android:background="@drawable/atas"
+    android:padding="16dp">
+
+    <!-- Notifikasi di pojok kanan atas -->
+    <ImageView
+        android:id="@+id/ivNotification"
+        android:layout_width="54dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="4dp"
+        android:contentDescription="Notification"
+        android:src="@drawable/ic_notifications" />
+
+    <!-- Container User Info -->
+    <LinearLayout
+        android:id="@+id/container_info"
+        android:layout_width="308dp"
+        android:layout_height="112dp"
+        android:layout_below="@id/ivNotification"
+        android:layout_marginTop="-33dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@color/white"
+            android:contentDescription="Profile"
+            android:padding="4dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_person" />
+
+        <TextView
+            android:id="@+id/nav_header_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:text="Nama Pengguna"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/nav_header_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="email@contoh.com"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</RelativeLayout>

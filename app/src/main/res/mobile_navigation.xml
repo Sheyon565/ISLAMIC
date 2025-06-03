@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.islamic.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home">
+
+        <!-- Pindahkan action ke dalam fragment home -->
+        <action
+            android:id="@+id/action_homeFragment_to_jadwalSholatFragment"
+            app:destination="@id/jadwalSholatFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_kumpulanDoa"
+            app:destination="@id/kumpulanDoa"/>
+        <action
+            android:id="@+id/action_homeFragment_to_kalenderHijriyahFragment"
+            app:destination="@id/kalenderHijriyahFragment"/>
+        <action
+            android:id="@+id/action_homeFragment_to_amalanHarianFragment"
+            app:destination="@id/amalanHarianFragment"/>
+        <action
+            android:id="@+id/action_homeFragment_to_notificationsFragment"
+            app:destination="@id/navigation_notifications"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/jadwalSholatFragment"
+        android:name="com.example.islamic.ui.prayer.JadwalSholatFragment"
+        android:label="@string/title_jadwal_sholat"
+        tools:layout="@layout/fragment_prayer_times" />
+
+    <fragment
+        android:id="@+id/kalenderHijriyahFragment"
+        android:name="com.example.islamic.ui.calendar.HijriCalendarFragment"
+        android:label="@string/title_calendar"
+        tools:layout="@layout/fragment_hijri_calendar"/>
+
+    <fragment
+        android:id="@+id/amalanHarianFragment"
+        android:name="com.example.islamic.ui.daily.DailyPracticeFragment"
+        android:label="@string/title_amalanHarian"
+        tools:layout="@layout/fragment_daily_practice" />
+
+    <fragment
+        android:id="@+id/navigation_profil"
+        android:name="com.example.islamic.ui.profil.ProfilFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profil" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.islamic.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/kumpulanDoa"
+        android:name="com.example.islamic.ui.kumpulandoa.KumpulanDoaFragment"
+        android:label="Kumpulan Doa"
+        tools:layout="@layout/activity_kumpulan_doa" />
+
+</navigation>

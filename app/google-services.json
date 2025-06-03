@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "461802183574",
+    "project_id": "islamicapp-db0a2",
+    "storage_bucket": "islamicapp-db0a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461802183574:android:b751dc81a3c532e5071bb7",
+        "android_client_info": {
+          "package_name": "com.example.islamic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvpQK6QHs4d7XjzbskTXQPdotkDGUwL4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

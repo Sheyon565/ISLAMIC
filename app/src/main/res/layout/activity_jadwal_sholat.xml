@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardPrayerTimes"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp"
+    android:layout_marginTop="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="14dp">
+
+            <TextView
+                android:id="@+id/tvDay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Today / Tuesday"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="May 27, 2025 / 29 Dhu al-Qa'da 1446"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+            <TextView
+                android:id="@+id/tvSubuhLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Subuh"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tvSubuhTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="04:30"
+                android:textSize="18sp"/>
+
+            <ImageView
+                android:id="@+id/ivSubuhNotify"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_notifications"
+                android:contentDescription="Notification"
+                android:layout_marginStart="10dp"
+                app:tint="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+            <TextView
+                android:id="@+id/tvDhuzurLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Dhuzur"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tvDhuzurTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12:30"
+                android:textSize="18sp"/>
+
+            <ImageView
+                android:id="@+id/ivDhuzurNotify"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_notifications"
+                android:contentDescription="Notification"
+                android:layout_marginStart="10dp"
+                app:tint="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+            <TextView
+                android:id="@+id/tvAsharLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Ashar"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tvAsharTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15:30"
+                android:textSize="18sp"/>
+
+            <ImageView
+                android:id="@+id/ivAsharNotify"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_notifications"
+                android:contentDescription="Notification"
+                android:layout_marginStart="10dp"
+                app:tint="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+            <TextView
+                android:id="@+id/tvMaghribLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Maghrib"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tvMaghribTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18:30"
+                android:textSize="18sp"/>
+
+            <ImageView
+                android:id="@+id/ivMaghribNotify"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_notifications"
+                android:contentDescription="Notification"
+                android:layout_marginStart="10dp"
+                app:tint="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+            <TextView
+                android:id="@+id/tvIsyaLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Isya"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tvIsyaTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="04:30"
+                android:textSize="18sp"/>
+
+            <ImageView
+                android:id="@+id/ivIsyaNotify"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_notifications"
+                android:contentDescription="Notification"
+                android:layout_marginStart="10dp"
+                app:tint="@color/black"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

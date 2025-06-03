@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">ISLAMIC</string>
+    <string name="title_home">Home</string>
+    <string name="title_profile">Profil</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_jadwal_sholat">Jadwal Sholat</string>
+    <string name="title_calendar">Calendar</string>
+    <string name="title_amalanHarian">Daily Practices</string>"
+    <string name="hadis2">Menuntut ilmu itu wajib atas setiap Muslim</string>
+    <string name="createAccount">Create New Account</string>
+    <string name="name">Name</string>
+    <string name="edit_profil">Profile</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="dob">Date Of Birth</string>
+    <string name="signUp">Sign Up</string>
+    <string name="alreadyRegistered">Already Registered? Log in here.</string>"
+    <string-array name="lokasi_array">
+        <item>Jakarta</item>
+        <item>Bandung</item>
+        <item>Surabaya</item>
+        <item>Yogyakarta</item>
+        <item>Medan</item>
+        <item>Makassar</item>
+        <item>Samarinda</item>
+    </string-array>
+    <string-array name="day_options">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+</resources>
