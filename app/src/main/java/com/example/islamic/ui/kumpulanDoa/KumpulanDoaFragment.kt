@@ -1,22 +1,23 @@
-package com.example.islamic.ui.kumpulandoa
+package com.example.islamic.ui.kumpulanDoa
 
 import android.os.Bundle
 import android.view.*
 import com.example.islamic.R
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.islamic.databinding.ActivityKumpulanDoaBinding
+import com.example.islamic.databinding.FragmentKumpulanDoaBinding
 
 
 class KumpulanDoaFragment : Fragment() {
 
-    private var _binding: ActivityKumpulanDoaBinding? = null
+    private var _binding: FragmentKumpulanDoaBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_kumpulan_doa, container, false)
+        _binding = FragmentKumpulanDoaBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -24,7 +25,6 @@ class KumpulanDoaFragment : Fragment() {
 
         // Setup toolbar as action bar
         val activity = requireActivity() as AppCompatActivity
-        activity.setSupportActionBar(binding.toolbarKumpulanDoa)
 
         // Show back button on toolbar
         activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)

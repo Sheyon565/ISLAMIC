@@ -5,28 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- AppBar dengan Toolbar untuk judul dan tombol Back -->
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/teal_700">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_kumpulan_doa"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:navigationIcon="@drawable/back"
-            app:title="Kumpulan Doa" />
-    </com.google.android.material.appbar.AppBarLayout>
-
     <!-- Konten utama: ScrollView berisi 10 doa -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:padding="16dp">
+        android:padding="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"

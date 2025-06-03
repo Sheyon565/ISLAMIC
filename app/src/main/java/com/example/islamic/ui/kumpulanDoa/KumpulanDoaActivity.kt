@@ -1,27 +1,17 @@
-package com.example.islamic
+package com.example.islamic.ui.kumpulanDoa
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.islamic.databinding.ActivityKumpulanDoaBinding
+import com.example.islamic.databinding.FragmentKumpulanDoaBinding
 
 class KumpulanDoaActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityKumpulanDoaBinding
+    private lateinit var binding: FragmentKumpulanDoaBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityKumpulanDoaBinding.inflate(layoutInflater)
+        binding = FragmentKumpulanDoaBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Set toolbar sebagai action bar
-        setSupportActionBar(binding.toolbarKumpulanDoa)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Kumpulan Doa"
-
-        // Tombol back di toolbar
-        binding.toolbarKumpulanDoa.setNavigationOnClickListener {
-            finish() // Kembali ke Home
-        }
     }
 
     // Opsional: jika user tekan back di navbar Android

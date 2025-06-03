@@ -37,6 +37,9 @@
 
     <fragment
         android:id="@+id/kumpulanDoaFragment"
+        android:name="com.example.islamic.ui.kumpulanDoa.KumpulanDoaFragment"
+        android:label="@string/title_kumpulandoa"
+        tools:layout="@layout/fragment_kumpulan_doa"
         />
 
     <fragment
