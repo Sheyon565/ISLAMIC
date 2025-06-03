@@ -141,7 +141,7 @@ class DailyPracticeFragment : Fragment() {
         val calendar = Calendar.getInstance()
         return when (calendar.get(Calendar.DAY_OF_WEEK)) {
             Calendar.MONDAY -> "Monday"
-            Calendar.TUESDAY -> "Tueday"
+            Calendar.TUESDAY -> "Tuesday"
             Calendar.WEDNESDAY -> "Wednesday"
             Calendar.THURSDAY -> "Thursday"
             Calendar.FRIDAY -> "Friday"
