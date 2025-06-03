@@ -49,9 +49,14 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = NotificationAdapter { notification ->
-            viewModel.markAsRead(notification.id)
-        }
+        adapter = NotificationAdapter (
+            onNotificationClick = { notification ->
+                viewModel.markAsRead(notification.id)
+            },
+            onDeleteClick = { notification ->
+                viewModel.deleteNotification(notification.id)
+            }
+        )
         binding.rvNotifications.layoutManager = LinearLayoutManager(context)
         binding.rvNotifications.adapter = adapter
     }

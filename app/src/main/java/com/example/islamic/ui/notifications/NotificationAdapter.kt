@@ -11,7 +11,8 @@ import com.example.islamic.data.model.PrayerNotification
 import com.example.islamic.databinding.ItemNotificationBinding
 
 class NotificationAdapter(
-    private val onNotificationClick: (PrayerNotification) -> Unit
+    private val onNotificationClick: (PrayerNotification) -> Unit,
+    private val onDeleteClick: (PrayerNotification) -> Unit
 ) : ListAdapter<PrayerNotification, NotificationAdapter.NotificationViewHolder>(NotificationDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
@@ -66,8 +67,7 @@ class NotificationAdapter(
                             true
                         }
                         R.id.action_delete -> {
-                            // Handle delete action
-                            // viewModel.deleteNotification(notification.id)
+                            onDeleteClick(notification)
                             true
                         }
                         else -> false

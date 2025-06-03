@@ -53,6 +53,10 @@ class NotificationRepository {
         }
     }
 
+    fun deleteNotification(notificationId: String) {
+        notifications.removeAll { it.id == notificationId }
+    }
+
     // Fungsi untuk mendapatkan notifikasi simulasi (misalnya dari API)
     suspend fun fetchNotifications(): List<Notification> {
         delay(500) // Simulasi delay API

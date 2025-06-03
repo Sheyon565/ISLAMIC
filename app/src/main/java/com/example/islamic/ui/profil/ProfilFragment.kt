@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.util.Log
 import androidx.fragment.app.Fragment
+import com.example.islamic.ChangePasswordActivity
+import com.example.islamic.EditProfileActivity
 import com.example.islamic.LoginActivity
 import com.example.islamic.R
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -22,7 +24,6 @@ class ProfilFragment : Fragment() {
     private lateinit var editProfileItem: LinearLayout
     private lateinit var changePasswordItem: LinearLayout
     private lateinit var logoutItem: LinearLayout
-    private lateinit var bottomNavigation: BottomNavigationView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +40,6 @@ class ProfilFragment : Fragment() {
         editProfileItem = view.findViewById(R.id.editProfileItem)
         changePasswordItem = view.findViewById(R.id.changePasswordItem)
         logoutItem = view.findViewById(R.id.logoutItem)
-        bottomNavigation = view.findViewById(R.id.bottomNavigation)
 
         // Tampilkan data user
         setUserData(auth.currentUser)
@@ -48,22 +48,25 @@ class ProfilFragment : Fragment() {
         setupClickListeners()
 
         // Bottom navigation
-        setupBottomNavigation()
-
         return view
     }
 
     private fun setUserData(user: FirebaseUser?) {
         profileName.text = user?.displayName ?: "User"
         profileEmail.text = user?.email ?: "No Email"
+        Log.d("ProfilFragment", "Display Name: ${user?.displayName}")
     }
 
     private fun setupClickListeners() {
         editProfileItem.setOnClickListener {
+            val intent = Intent(requireContext(), EditProfileActivity::class.java)
+            startActivity(intent)
             Toast.makeText(requireContext(), "Edit Profile clicked", Toast.LENGTH_SHORT).show()
         }
 
         changePasswordItem.setOnClickListener {
+            val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
+            startActivity(intent)
             Toast.makeText(requireContext(), "Change Password clicked", Toast.LENGTH_SHORT).show()
         }
 
@@ -75,22 +78,5 @@ class ProfilFragment : Fragment() {
         }
     }
 
-    private fun setupBottomNavigation() {
-        bottomNavigation.selectedItemId = R.id.navigation_profil
 
-        bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> {
-                    Toast.makeText(requireContext(), "Home clicked", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.navigation_notifications -> {
-                    Toast.makeText(requireContext(), "Notifications clicked", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.navigation_profil -> true
-                else -> false
-            }
-        }
-    }
 }

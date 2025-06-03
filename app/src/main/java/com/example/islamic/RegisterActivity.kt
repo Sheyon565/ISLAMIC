@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import java.util.Calendar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Locale
 
@@ -90,6 +91,12 @@ class RegisterActivity : AppCompatActivity() {
                         setInputEnabled(true)
                         if (task.isSuccessful) {
                             val userId = auth.currentUser?.uid ?: return@addOnCompleteListener
+                            val firebaseUser = auth.currentUser
+                            val profileUpdates = UserProfileChangeRequest.Builder()
+                                .setDisplayName(name)
+                                .build()
+
+                            firebaseUser?.updateProfile(profileUpdates)
                             val user = mapOf(
                                 "name" to name,
                                 "email" to email,

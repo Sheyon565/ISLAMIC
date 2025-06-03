@@ -35,4 +35,15 @@ class NotificationViewModel(
             }
         }
     }
+
+    fun deleteNotification(notificationId: String) {
+        viewModelScope.launch {
+            try {
+                repository.deleteNotification(notificationId)
+                loadNotifications()
+            } catch (e: Exception) {
+                // Handle error if needed
+            }
+        }
+    }
 }

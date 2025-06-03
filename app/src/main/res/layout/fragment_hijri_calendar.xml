@@ -61,28 +61,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:layout_marginBottom="8dp">
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnPrevMonth"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="&lt;"/>
+                android:text="‹"
+                android:textSize="25dp"
+                android:layout_gravity="start"
+                android:backgroundTint="@android:color/transparent"
+                android:textColor="@color/black"
+                style="?android:attr/borderlessButtonStyle"/>
 
             <TextView
                 android:id="@+id/tvCurrentMonth"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="4"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Ramadhan 1445 H"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:padding="8dp"/>
+                android:padding="8dp"
+                android:textColor="@color/black"/>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnNextMonth"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="&gt;"/>
+                android:text="›"
+                android:textSize="25dp"
+                android:layout_gravity="end"
+                android:elevation="0dp"
+                android:backgroundTint="@android:color/transparent"
+                android:textColor="@color/black"
+                style="?android:attr/borderlessButtonStyle"/>
         </LinearLayout>
 
         <LinearLayout

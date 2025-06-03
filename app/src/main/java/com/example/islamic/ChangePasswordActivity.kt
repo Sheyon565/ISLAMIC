@@ -21,12 +21,11 @@ class ChangePasswordActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
-        // 1. Setup toolbar dengan tombol back
-        setSupportActionBar(binding.toolbarChangePassword)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        // Saat tombol back di toolbar ditekan
-        binding.toolbarChangePassword.setNavigationOnClickListener {
-            finish()
+        // 1. ActionBar
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+            title = "Ubah Password"
         }
 
         // 2. Saat "Ubah Password" ditekan
