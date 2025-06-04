@@ -14,6 +14,7 @@ import com.example.islamic.LoginActivity
 import com.example.islamic.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.bumptech.glide.Glide
 
 class ProfilFragment : Fragment() {
 
@@ -54,7 +55,17 @@ class ProfilFragment : Fragment() {
     private fun setUserData(user: FirebaseUser?) {
         profileName.text = user?.displayName ?: "User"
         profileEmail.text = user?.email ?: "No Email"
-        Log.d("ProfilFragment", "Display Name: ${user?.displayName}")
+
+        val photoUri = user?.photoUrl
+        if (photoUri != null) {
+            Glide.with(this)
+                .load(photoUri)
+                .placeholder(R.drawable.ic_person)
+                .error(R.drawable.logo)
+                .into(profileImage)
+        } else {
+            profileImage.setImageResource(R.drawable.logo)
+        }
     }
 
     private fun setupClickListeners() {

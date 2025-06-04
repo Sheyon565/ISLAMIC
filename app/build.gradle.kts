@@ -80,6 +80,10 @@ dependencies {
     implementation("com.github.msarhan:ummalqura-calendar:1.1.6")
     implementation("com.batoulapps.adhan:adhan:1.2.1")
 
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    kapt("com.github.bumptech.glide:compiler:4.15.1")
+
     // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")

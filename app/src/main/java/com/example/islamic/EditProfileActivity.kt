@@ -2,10 +2,20 @@ package com.example.islamic
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Build
 import android.text.InputType
 import android.widget.Toast
 import android.util.Patterns
 import android.widget.EditText
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.util.Base64
+import okhttp3.*
+import org.json.JSONObject
+import java.io.IOException
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.ActivityResultLauncher
+import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.islamic.databinding.EditProfilBinding
@@ -20,6 +30,8 @@ import com.google.firebase.auth.userProfileChangeRequest
 class EditProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: EditProfilBinding
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +43,34 @@ class EditProfileActivity : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
             title = "Edit Profile"
+        }
+
+        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            if (uri != null) {
+                binding.imageAvatar.setImageURI(uri)
+                val imageBase64 = uriToBase64(uri)
+                if (imageBase64 != null) {
+                    uploadImageToImgBB(imageBase64)
+                } else {
+                    Toast.makeText(this, "Failed to convert image", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        requestPermissionLauncher =
+            registerForActivityResult (ActivityResultContracts.RequestPermission()) { isGranted : Boolean ->
+                if (isGranted) {
+                    openImagePicker()
+                } else {
+                    Toast.makeText(this, "Permission required to access photos", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+        binding.btnChangePhoto.setOnClickListener {
+            checkStoragePermissionAndOpenPicker()
         }
 
         // 2. Prefill form dengan data dari SharedPreferences (jika sudah pernah disimpan)
@@ -152,6 +192,96 @@ class EditProfileActivity : AppCompatActivity() {
                 }
             }
     }
+
+    private fun openImagePicker() {
+        imagePickerLauncher.launch("image/*")
+    }
+
+    private fun checkStoragePermissionAndOpenPicker() {
+        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            android.Manifest.permission.READ_MEDIA_IMAGES
+        } else {
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+        }
+
+        if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
+            openImagePicker()
+        } else {
+            requestPermissionLauncher.launch(permission)
+        }
+    }
+
+    private fun uriToBase64(uri: Uri): String? {
+        val inputStream = contentResolver.openInputStream(uri)
+        val bytes = inputStream?.readBytes() ?: return null
+        return Base64.encodeToString(bytes, Base64.DEFAULT)
+    }
+
+    private fun uploadImageToImgBB(imageBase64: String) {
+        val client = OkHttpClient()
+
+        val requestBody = FormBody.Builder()
+            .add("image", imageBase64)
+            .add("type", "base64")
+            .build()
+
+        val request = Request.Builder()
+            .url("https://api.imgur.com/3/image")
+            .addHeader("Authorization", "Client-ID f2f2dd71b755961")
+            .post(requestBody)
+            .build()
+
+        client.newCall(request).enqueue(object: Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                runOnUiThread {
+                    Toast.makeText(this@EditProfileActivity,
+                        "Gagal mengunggah foto",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val jsonResponse = JSONObject(response.body?.string() ?: "")
+
+                if (jsonResponse.getBoolean("success")) {
+                        val url = jsonResponse.getJSONObject("data").getString("link")
+
+                        runOnUiThread {
+                            val user = FirebaseAuth.getInstance().currentUser
+                            if (user != null) {
+                                val profileUpdates = userProfileChangeRequest {
+                                    photoUri = Uri.parse(url)
+                                }
+                                user.updateProfile(profileUpdates)
+                                    .addOnCompleteListener { task ->
+                                        if (task.isSuccessful) {
+                                            Toast.makeText(
+                                                this@EditProfileActivity,
+                                                "Image uploaded: $url", Toast.LENGTH_SHORT
+                                            )
+                                                .show()
+                                        } else {
+                                            Toast.makeText(
+                                                this@EditProfileActivity,
+                                                "Failed to update photo: ${task.exception?.message}",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }
+                            }
+
+                        }
+                    } else {
+                        runOnUiThread{
+                            Toast.makeText(this@EditProfileActivity,
+                                "Upload Failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+            }
+            })
+    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
