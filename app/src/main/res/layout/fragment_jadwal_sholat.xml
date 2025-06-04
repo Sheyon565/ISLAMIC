@@ -58,12 +58,13 @@
                 android:text="04:30"
                 android:textSize="18sp"/>
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/ivSubuhNotify"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_notifications"
                 android:contentDescription="Notification"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_marginStart="10dp"
                 app:tint="@color/black"/>
         </LinearLayout>
@@ -89,12 +90,13 @@
                 android:text="12:30"
                 android:textSize="18sp"/>
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/ivDhuzurNotify"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_notifications"
                 android:contentDescription="Notification"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_marginStart="10dp"
                 app:tint="@color/black"/>
         </LinearLayout>
@@ -120,12 +122,13 @@
                 android:text="15:30"
                 android:textSize="18sp"/>
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/ivAsharNotify"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_notifications"
                 android:contentDescription="Notification"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_marginStart="10dp"
                 app:tint="@color/black"/>
         </LinearLayout>
@@ -151,12 +154,13 @@
                 android:text="18:30"
                 android:textSize="18sp"/>
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/ivMaghribNotify"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_notifications"
                 android:contentDescription="Notification"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_marginStart="10dp"
                 app:tint="@color/black"/>
         </LinearLayout>
@@ -182,12 +186,13 @@
                 android:text="04:30"
                 android:textSize="18sp"/>
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/ivIsyaNotify"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_notifications"
                 android:contentDescription="Notification"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_marginStart="10dp"
                 app:tint="@color/black"/>
         </LinearLayout>
