@@ -1,5 +1,6 @@
 package com.example.islamic
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Build
@@ -10,6 +11,8 @@ import android.widget.EditText
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.Base64
+import android.view.View
+import android.widget.ProgressBar
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -20,7 +23,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.islamic.databinding.EditProfilBinding
 import com.example.islamic.utils.PrefsHelper
-import com.google.firebase.Firebase
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -32,11 +35,19 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var binding: EditProfilBinding
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
+    private lateinit var progressBar: ProgressBar
+    private lateinit var saveButton: MaterialButton
+
+    private var selectedImageUri: Uri? = null
+    private var uploadedPhotoUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = EditProfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        progressBar = findViewById(R.id.progressBar)
+        saveButton = binding.btnSaveProfile
 
         // 1. Setup Toolbar dengan tombol back
         supportActionBar?.apply {
@@ -47,10 +58,11 @@ class EditProfileActivity : AppCompatActivity() {
 
         imagePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri != null) {
+                selectedImageUri = uri
                 binding.imageAvatar.setImageURI(uri)
                 val imageBase64 = uriToBase64(uri)
                 if (imageBase64 != null) {
-                    uploadImageToImgBB(imageBase64)
+                    uploadProfileImageAndSave(imageBase64)
                 } else {
                     Toast.makeText(this, "Failed to convert image", Toast.LENGTH_SHORT).show()
                 }
@@ -109,6 +121,7 @@ class EditProfileActivity : AppCompatActivity() {
             } else {
                 PrefsHelper.setProfile(this, newName, newEmail, newPhone)
                 Toast.makeText(this, "Profil berhasil diperbarui", Toast.LENGTH_SHORT).show()
+                setResult(Activity.RESULT_OK)
                 finish()  // Kembali ke ProfilFragment
             }
 
@@ -142,6 +155,13 @@ class EditProfileActivity : AppCompatActivity() {
                         user.updateEmail(newEmail).addOnCompleteListener { updateEmailTask ->
                             if (updateEmailTask.isSuccessful) {
                                 updateUserProfile(user, newName, newEmail, newPhone)
+
+                                val resultIntent = intent.apply{
+                                    putExtra("updateName", newName)
+                                    putExtra("updateEmail", newEmail)
+                                }
+
+                                setResult(Activity.RESULT_OK, resultIntent)
                             } else {
                                 Toast.makeText(
                                     this,
@@ -181,6 +201,14 @@ class EditProfileActivity : AppCompatActivity() {
                 if (updateProfileTask.isSuccessful) {
                     PrefsHelper.setProfile(this, newName, newEmail, newPhone)
                     Toast.makeText(this, "Profile berhasil diperbaharui", Toast.LENGTH_SHORT).show()
+
+                    val resultIntent = intent.apply {
+                        putExtra("updateName", newName)
+                        putExtra("updateEmail", newEmail)
+                        uploadedPhotoUrl?.let { putExtra("updatedPhoto", it)}
+                    }
+
+                    setResult(Activity.RESULT_OK)
                     finish()
                 } else {
                     Toast.makeText(
@@ -217,7 +245,7 @@ class EditProfileActivity : AppCompatActivity() {
         return Base64.encodeToString(bytes, Base64.DEFAULT)
     }
 
-    private fun uploadImageToImgBB(imageBase64: String) {
+    private fun uploadImageToImgBB(imageBase64: String, callback: (success: Boolean, url: String?) -> Unit) {
         val client = OkHttpClient()
 
         val requestBody = FormBody.Builder()
@@ -234,54 +262,60 @@ class EditProfileActivity : AppCompatActivity() {
         client.newCall(request).enqueue(object: Callback {
             override fun onFailure(call: Call, e: IOException) {
                 runOnUiThread {
-                    Toast.makeText(this@EditProfileActivity,
-                        "Gagal mengunggah foto",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@EditProfileActivity, "Failed to upload photo", Toast.LENGTH_SHORT).show()
+                    callback(false, null)
                 }
             }
 
             override fun onResponse(call: Call, response: Response) {
                 val jsonResponse = JSONObject(response.body?.string() ?: "")
-
                 if (jsonResponse.getBoolean("success")) {
-                        val url = jsonResponse.getJSONObject("data").getString("link")
-
-                        runOnUiThread {
-                            val user = FirebaseAuth.getInstance().currentUser
-                            if (user != null) {
-                                val profileUpdates = userProfileChangeRequest {
-                                    photoUri = Uri.parse(url)
-                                }
-                                user.updateProfile(profileUpdates)
-                                    .addOnCompleteListener { task ->
-                                        if (task.isSuccessful) {
-                                            Toast.makeText(
-                                                this@EditProfileActivity,
-                                                "Image uploaded: $url", Toast.LENGTH_SHORT
-                                            )
-                                                .show()
-                                        } else {
-                                            Toast.makeText(
-                                                this@EditProfileActivity,
-                                                "Failed to update photo: ${task.exception?.message}",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        }
-                                    }
-                            }
-
-                        }
-                    } else {
-                        runOnUiThread{
-                            Toast.makeText(this@EditProfileActivity,
-                                "Upload Failed", Toast.LENGTH_SHORT).show()
-                        }
+                    val url = jsonResponse.getJSONObject("data").getString("link")
+                    runOnUiThread {
+                        callback(true, url)
                     }
-
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(this@EditProfileActivity, "Upload failed", Toast.LENGTH_SHORT).show()
+                        callback(false, null)
+                    }
+                }
             }
-            })
+        })
     }
 
+    private fun uploadProfileImageAndSave(imageBase64: String) {
+        progressBar.visibility = View.VISIBLE
+        saveButton.isEnabled = false
+
+        uploadImageToImgBB(imageBase64) { success, url ->
+            progressBar.visibility = View.GONE
+            saveButton.isEnabled = true
+
+            if (success && url != null) {
+                val user = FirebaseAuth.getInstance().currentUser
+                if (user != null) {
+                    val profileUpdates = userProfileChangeRequest {
+                        photoUri = Uri.parse(url)
+                    }
+                    user.updateProfile(profileUpdates).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            uploadedPhotoUrl = url
+                            Toast.makeText(this, "Profile image updated", Toast.LENGTH_SHORT).show()
+                            setResult(Activity.RESULT_OK)
+                            finish()
+                        } else {
+                            Toast.makeText(this, "Failed to update profile image", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Image upload failed", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         finish()

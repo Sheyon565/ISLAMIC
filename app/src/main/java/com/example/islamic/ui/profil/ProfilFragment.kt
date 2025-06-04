@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.app.Activity
 import android.util.Log
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.islamic.ChangePasswordActivity
 import com.example.islamic.EditProfileActivity
@@ -25,6 +28,20 @@ class ProfilFragment : Fragment() {
     private lateinit var editProfileItem: LinearLayout
     private lateinit var changePasswordItem: LinearLayout
     private lateinit var logoutItem: LinearLayout
+
+    private var editProfileLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            FirebaseAuth.getInstance().currentUser?.reload()?.addOnCompleteListener {
+                if (it.isSuccessful) {
+                    setUserData(FirebaseAuth.getInstance().currentUser)
+                } else {
+                    Toast.makeText(requireContext(), "Failed to reload user data", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +70,7 @@ class ProfilFragment : Fragment() {
     }
 
     private fun setUserData(user: FirebaseUser?) {
+        Log.d("ProfilFragment", "Updating UI: ${user?.displayName}, ${user?.email}")
         profileName.text = user?.displayName ?: "User"
         profileEmail.text = user?.email ?: "No Email"
 
@@ -71,7 +89,7 @@ class ProfilFragment : Fragment() {
     private fun setupClickListeners() {
         editProfileItem.setOnClickListener {
             val intent = Intent(requireContext(), EditProfileActivity::class.java)
-            startActivity(intent)
+            editProfileLauncher.launch(intent)
             Toast.makeText(requireContext(), "Edit Profile clicked", Toast.LENGTH_SHORT).show()
         }
 
@@ -88,6 +106,4 @@ class ProfilFragment : Fragment() {
             requireActivity().finish()
         }
     }
-
-
 }
