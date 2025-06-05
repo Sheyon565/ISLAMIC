@@ -79,11 +79,6 @@ class HomeFragment : Fragment() {
             navigateToFeature(FeatureType.DAILY_PRACTICES)
         }
 
-        // Set up notification click listener
-        binding.ivNotification.setOnClickListener {
-            viewModel.hasUnreadNotifications()
-            navigateToFeature(FeatureType.NOTIFICATIONS)
-        }
     }
 
     private fun observeViewModel() {

@@ -6,7 +6,6 @@
     android:id="@+id/container_edit_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context="com.example.islamic.EditProfileActivity">
 
     <!-- Toolbar / AppBar -->
