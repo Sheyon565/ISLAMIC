@@ -18,7 +18,8 @@ class NotificationViewModel(
     fun loadNotifications() {
         viewModelScope.launch {
             try {
-                _notifications.value = repository.getNotifications()
+                val fetchedList = repository.getNotifications()
+                _notifications.value = ArrayList(fetchedList)
             } catch (e: Exception) {
                 // Handle error if needed
             }
